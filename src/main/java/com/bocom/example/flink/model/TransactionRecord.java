@@ -1,7 +1,7 @@
-package com.bocom.example.flink;
+package com.bocom.example.flink.model;
 
 /**
- * com.bocom.example.flink.TransactionRecord
+ * com.bocom.example.flink.model.TransactionRecord
  *
  * @author zhangyuewen
  * @since 2025/2/1

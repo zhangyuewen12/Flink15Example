@@ -1,4 +1,4 @@
-package com.bocom.example.flink;
+package com.bocom.example.flink.utils;
 
 /**
  * RedisTestDataGenerator
@@ -6,14 +6,13 @@ package com.bocom.example.flink;
  * @author zhangyuewen
  * @since 2025/2/1
  **/
+import com.bocom.example.flink.model.UserInfo;
 import redis.clients.jedis.Jedis;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Random;
 
-public class RedisTestDataGenerator {
+public class RedisUtil {
 
     public static void main(String[] args) {
         // Redis 连接配置

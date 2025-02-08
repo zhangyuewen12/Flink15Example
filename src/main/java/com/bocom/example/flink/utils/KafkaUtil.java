@@ -1,4 +1,4 @@
-package com.bocom.example.flink;
+package com.bocom.example.flink.utils;
 
 /**
  * KafkaTranstionDataProducerUtil
@@ -6,6 +6,7 @@ package com.bocom.example.flink;
  * @author zhangyuewen
  * @since 2025/2/1
  **/
+import com.bocom.example.flink.model.TransactionRecord;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.kafka.common.serialization.StringSerializer;

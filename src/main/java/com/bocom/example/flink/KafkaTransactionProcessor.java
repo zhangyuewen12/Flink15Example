@@ -6,22 +6,21 @@ package com.bocom.example.flink;
  * @author zhangyuewen
  * @since 2025/2/1
  **/
+import com.bocom.example.flink.model.EnrichedTransaction;
+import com.bocom.example.flink.model.TransactionRecord;
+import com.bocom.example.flink.model.UserInfo;
 import org.apache.flink.api.common.functions.FilterFunction;
 import org.apache.flink.api.common.functions.MapFunction;
 import org.apache.flink.api.common.functions.RichMapFunction;
 import org.apache.flink.api.common.serialization.SimpleStringSchema;
 import org.apache.flink.configuration.Configuration;
-import org.apache.flink.connector.base.DeliveryGuarantee;
 import org.apache.flink.connector.kafka.sink.KafkaRecordSerializationSchema;
 import org.apache.flink.connector.kafka.sink.KafkaSink;
 import org.apache.flink.streaming.api.datastream.DataStream;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
 import org.apache.flink.streaming.connectors.kafka.FlinkKafkaConsumer;
-import org.apache.flink.streaming.connectors.kafka.FlinkKafkaProducer;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
-import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
-import org.apache.kafka.common.serialization.StringSerializer;
 import redis.clients.jedis.Jedis;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -32,6 +31,10 @@ public class KafkaTransactionProcessor {
     public static void main(String[] args) throws Exception {
         // 设置 Flink 执行环境
         StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
+        env.setParallelism(1);
+        env.getCheckpointConfig().setCheckpointInterval(1000*60);
+        env.getCheckpointConfig().setCheckpointTimeout(1000*60*10);
+        env.getCheckpointConfig().setCheckpointStorage("hdfs://localhost:9000/flink/checkpoint/");
 
         // Kafka 消费者配置
         Properties kafkaConsumerProps = new Properties();
@@ -101,8 +104,8 @@ public class KafkaTransactionProcessor {
                 )
                 .build();
         // 将结果写入 Kafka
-        enrichedTransactions.sinkTo(sink);
-//        enrichedTransactions.print();
+//        enrichedTransactions.sinkTo(sink);
+        enrichedTransactions.print();
 
         // 执行 Flink 程序
         env.execute("Kafka Transaction Processor");

@@ -1,4 +1,4 @@
-package com.bocom.example.flink;
+package com.bocom.example.flink.model;
 
 /**
  * EnrichedTransaction
