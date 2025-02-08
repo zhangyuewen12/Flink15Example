@@ -43,6 +43,7 @@ public class KafkaTransactionProcessor {
         kafkaConsumerProps.setProperty(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());
         kafkaConsumerProps.setProperty(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());
 
+
         // 创建 Kafka 消费者
         FlinkKafkaConsumer<String> kafkaConsumer = new FlinkKafkaConsumer<>("transaction-topic", new SimpleStringSchema(), kafkaConsumerProps);
 
